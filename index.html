@@ -12,35 +12,35 @@
             <label for="playerName">Player Name:</label>
             <input type="text" id="playerName" name="playerName" required>
             <br>
-            <label for="strength">Strength:</label>
+            <label for="strength">Power:</label>
             <input type="range" id="strength" name="strength" min="1" max="100" value="50">
             <span id="strengthValue">50</span>
             <br>
             <label for="position">Position:</label>
             <select id="position" name="position" required>
-                <option value="defense">Geri</option>
-                <option value="midfield">Orta</option>
-                <option value="forward">İleri</option>
+                <option value="Defense">Defense</option>
+                <option value="Midfield">Midfield</option>
+                <option value="Forward">Forward</option>
             </select>
             <br>
             <button type="submit">Add Player</button>
         </form>
         <div>
             <h2>Players:</h2>
-            <ul id="playerList"></ul>
+            <ol  id="playerList"></ol>
         </div>
     </div>
     <button id="createTeams">Takımları Oluştur</button>
     <div class="teams">
         <div>
             <h2>Team 1:</h2>
-            <ul id="team1"></ul>
-            <p id="team1Strength">Total Strength: 0</p>
+            <p id="team1Strength">Total Power: 0</p>
+            <ol id="team1"></ol>
         </div>
         <div>
             <h2>Team 2:</h2>
-            <ul id="team2"></ul>
-            <p id="team2Strength">Total Strength: 0</p>
+            <p id="team2Strength">Total Power: 0</p>
+            <ol  id="team2"></ol          
         </div>
     </div>
     <script>
@@ -49,11 +49,51 @@
         function updatePlayerList() {
             const playerList = document.getElementById('playerList');
             playerList.innerHTML = '';
-            players.forEach(player => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${player.name} - Strength: ${player.strength} - Position: ${player.position}`;
+            players.forEach((player, index) => {
+                const listItem = createPlayerListItem(player);
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Sil';
+                removeButton.style.marginLeft = '10px';
+                removeButton.addEventListener('click', () => {
+                    removePlayer(index);
+                });
+
+                listItem.appendChild(removeButton);
                 playerList.appendChild(listItem);
             });
+
+            document.querySelectorAll('.player-item').forEach(item => {
+                item.addEventListener('dblclick', function() {
+                    const playerName = this.querySelector('.player-name');
+                    const newName = prompt("Yeni oyuncu adını girin:", playerName.textContent);
+                    if (newName) {
+                        playerName.textContent = newName;
+                        // Update player object in the players array
+                        const player = players.find(p => p.name === playerName.textContent);
+                        if (player) {
+                            player.name = newName;
+                        }
+                    }
+                });
+
+                const strengthSlider = item.querySelector('.strength-slider');
+                strengthSlider.addEventListener('input', function() {
+                    const playerStrength = item.querySelector('.player-strength');
+                    playerStrength.textContent = this.value;
+                    // Update player object in the players array
+                    const player = players.find(p => p.name === item.querySelector('.player-name').textContent);
+                    if (player) {
+                        player.strength = parseInt(this.value, 10);
+                    }
+                });
+            });
+        }
+
+        function removePlayer(index) {
+            players.splice(index, 1);
+            localStorage.setItem('players', JSON.stringify(players));
+            updatePlayerList();
         }
 
         document.getElementById('strength').addEventListener('input', function() {
@@ -72,7 +112,7 @@
 
             updatePlayerList();
 
-            // Clear the form
+            // Formu temizle
             document.getElementById('playerForm').reset();
             document.getElementById('strengthValue').textContent = '50';
         });
@@ -86,7 +126,7 @@
             let team1Strength = 0;
             let team2Strength = 0;
 
-            const positions = ['defense', 'midfield', 'forward'];
+            const positions = ['Defense', 'Midfield', 'Forward'];
             positions.forEach(position => {
                 const positionPlayers = shuffledPlayers.filter(player => player.position === position);
                 positionPlayers.forEach(player => {
@@ -106,22 +146,33 @@
             team2List.innerHTML = '';
 
             team1.forEach(player => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${player.name} - Strength: ${player.strength} - Position: ${player.position}`;
+                const listItem = createPlayerListItem(player);
                 team1List.appendChild(listItem);
             });
 
             team2.forEach(player => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${player.name} - Strength: ${player.strength} - Position: ${player.position}`;
+                const listItem = createPlayerListItem(player);
                 team2List.appendChild(listItem);
             });
-
-            document.getElementById('team1Strength').textContent = `Total Strength: ${team1Strength} - Player Count: ${team1.length}`;
-            document.getElementById('team2Strength').textContent = `Total Strength: ${team2Strength} - Player Count: ${team2.length}`;
+            document.getElementById('team1Strength').textContent = `Total Power: ${team1Strength} - Player Count: ${team1.length}`;
+            document.getElementById('team2Strength').textContent = `Total Power: ${team2Strength} - Player Count: ${team2.length}`;
         });
 
-        // Initialize player list on page load
+        function createPlayerListItem(player) {
+            const listItem = document.createElement('li');
+            listItem.classList.add('player-item');
+            listItem.innerHTML = `
+                <span class="player-name">${player.name}</span> 
+                <span class="player-strength">${player.strength}</span> 
+                <span class="player-position">${player.position}</span>
+                <div class="edit-controls">
+                    <input type="range" class="strength-slider" min="0" max="100" value="${player.strength}">
+                </div>
+            `;
+            return listItem;
+        }
+
+        // Sayfa yüklendiğinde oyuncu listesini başlat
         updatePlayerList();
     </script>
 </body>

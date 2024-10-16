@@ -68,7 +68,6 @@ form {
 .player-list {
     display: flex;
     justify-content: flex-end;
-    flex-direction: column;
     width: 30%;
     max-width: 600px;
     padding: 20px;
@@ -192,4 +191,118 @@ p {
     text-align: center;
     margin-top: 10px;
     font-size: 16px;
+}
+/* Silme butonunun (X) CSS stili */
+button {
+    background-color: red;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 4px 4px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+/* Oyuncu adı */
+.player-name {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-right: 10px;
+}
+
+/* Güç */
+.player-strength {
+    background-color: #2870ff;
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* Pozisyon */
+.player-position {
+    background-color: var(--position-color, #16a085);
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-style: italic;
+}
+/* Position colors */
+:root {
+    --defense-color: #28a745; /* Green */
+    --midfield-color: #ffc107; /* Orange */
+    --forward-color: #007bff; /* Blue */
+}
+
+.player-position.defense {
+    background-color: var(--defense-color);
+}
+
+.player-position.midfield {
+    background-color: var(--midfield-color);
+}
+
+.player-position.forward {
+    background-color: var(--forward-color);
+}
+/* Genel liste öğesi */
+li {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+/* X butonu */
+button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: darkred;
+}
+/* Team 1 Strength */
+#team1Strength {
+    font-weight: bold;
+    color: #e74c3c; /* Kırmızı ton */
+    margin-top: 5px;
+    font-size: 18px;
+    padding-bottom: 20px;
+}
+
+/* Team 2 Strength */
+#team2Strength {
+    font-weight: bold;
+    color: #3498db; /* Mavi ton */
+    margin-top: 5px;
+    font-size: 18px;
+    padding-bottom: 20px;
+}
+.player-item {
+    position: relative;
+}
+
+.player-item .edit-controls {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 10;
+}
+
+.player-item:hover .edit-controls {
+    display: block;
 }
