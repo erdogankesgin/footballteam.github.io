@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player List</title>
+    <link rel="stylesheet" href="style.css">   
+</head>
+<body>
+    <h1>Player List</h1>
+    <form id="playerForm">
+        <label for="playerName">Player Name:</label>
+        <input type="text" id="playerName" name="playerName" required>
+        <br>
+        <label for="strength">Strength:</label>
+        <input type="range" id="strength" name="strength" min="1" max="100" value="50">
+        <span id="strengthValue">50</span>
+        <br>
+        <label for="position">Position:</label>
+        <select id="position" name="position" required>
+            <option value="defense">Geri</option>
+            <option value="midfield">Orta</option>
+            <option value="forward">İleri</option>
+        </select>
+        <br>
+        <button type="submit">Add Player</button>
+    </form>
+    <h2>Players:</h2>
+    <ul id="playerList"></ul>
+    <button id="createTeams">Takımları Oluştur</button>
+    <h2>Team 1:</h2>
+    <ul id="team1"></ul>
+    <p id="team1Strength">Total Strength: 0</p>
+    <h2>Team 2:</h2>
+    <ul id="team2"></ul>
+    <p id="team2Strength">Total Strength: 0</p>
+
+    <script>
+        const players = JSON.parse(localStorage.getItem('players')) || [];
+
+        function updatePlayerList() {
+            const playerList = document.getElementById('playerList');
+            playerList.innerHTML = '';
+            players.forEach(player => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${player.name} - Strength: ${player.strength} - Position: ${player.position}`;
+                playerList.appendChild(listItem);
+            });
+        }
+
+        document.getElementById('strength').addEventListener('input', function() {
+            document.getElementById('strengthValue').textContent = this.value;
+        });
+
+        document.getElementById('playerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const playerName = document.getElementById('playerName').value;
+            const strength = document.getElementById('strength').value;
+            const position = document.getElementById('position').value;
+
+            const player = { name: playerName, strength: parseInt(strength), position: position };
+            players.push(player);
+            localStorage.setItem('players', JSON.stringify(players));
+
+            updatePlayerList();
+
+            // Clear the form
+            document.getElementById('playerForm').reset();
+            document.getElementById('strengthValue').textContent = '50';
+        });
+
+        document.getElementById('createTeams').addEventListener('click', function() {
+            // Shuffle players array to ensure randomness
+            const shuffledPlayers = players.sort(() => 0.5 - Math.random());
+
+            const team1 = [];
+            const team2 = [];
+            let team1Strength = 0;
+            let team2Strength = 0;
+
+            const positions = ['defense', 'midfield', 'forward'];
+            positions.forEach(position => {
+                const positionPlayers = shuffledPlayers.filter(player => player.position === position);
+                positionPlayers.forEach(player => {
+                    if (team1Strength <= team2Strength) {
+                        team1.push(player);
+                        team1Strength += player.strength;
+                    } else {
+                        team2.push(player);
+                        team2Strength += player.strength;
+                    }
+                });
+            });
+
+            const team1List = document.getElementById('team1');
+            const team2List = document.getElementById('team2');
+            team1List.innerHTML = '';
+            team2List.innerHTML = '';
+
+            team1.forEach(player => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${player.name} - Strength: ${player.strength} - Position: ${player.position}`;
+                team1List.appendChild(listItem);
+            });
+
+            team2.forEach(player => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${player.name} - Strength: ${player.strength} - Position: ${player.position}`;
+                team2List.appendChild(listItem);
+            });
+
+            document.getElementById('team1Strength').textContent = `Total Strength: ${team1Strength} - Player Count: ${team1.length}`;
+            document.getElementById('team2Strength').textContent = `Total Strength: ${team2Strength} - Player Count: ${team2.length}`;
+        });
+
+        // Initialize player list on page load
+        updatePlayerList();
+    </script>
+</body>
+</html>
