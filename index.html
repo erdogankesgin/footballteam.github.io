@@ -7,34 +7,42 @@
     <link rel="stylesheet" href="style.css">   
 </head>
 <body>
-    <h1>Player List</h1>
-    <form id="playerForm">
-        <label for="playerName">Player Name:</label>
-        <input type="text" id="playerName" name="playerName" required>
-        <br>
-        <label for="strength">Strength:</label>
-        <input type="range" id="strength" name="strength" min="1" max="100" value="50">
-        <span id="strengthValue">50</span>
-        <br>
-        <label for="position">Position:</label>
-        <select id="position" name="position" required>
-            <option value="defense">Geri</option>
-            <option value="midfield">Orta</option>
-            <option value="forward">İleri</option>
-        </select>
-        <br>
-        <button type="submit">Add Player</button>
-    </form>
-    <h2>Players:</h2>
-    <ul id="playerList"></ul>
+    <div class="top">
+        <form id="playerForm">
+            <label for="playerName">Player Name:</label>
+            <input type="text" id="playerName" name="playerName" required>
+            <br>
+            <label for="strength">Strength:</label>
+            <input type="range" id="strength" name="strength" min="1" max="100" value="50">
+            <span id="strengthValue">50</span>
+            <br>
+            <label for="position">Position:</label>
+            <select id="position" name="position" required>
+                <option value="defense">Geri</option>
+                <option value="midfield">Orta</option>
+                <option value="forward">İleri</option>
+            </select>
+            <br>
+            <button type="submit">Add Player</button>
+        </form>
+        <div>
+            <h2>Players:</h2>
+            <ul id="playerList"></ul>
+        </div>
+    </div>
     <button id="createTeams">Takımları Oluştur</button>
-    <h2>Team 1:</h2>
-    <ul id="team1"></ul>
-    <p id="team1Strength">Total Strength: 0</p>
-    <h2>Team 2:</h2>
-    <ul id="team2"></ul>
-    <p id="team2Strength">Total Strength: 0</p>
-
+    <div class="teams">
+        <div>
+            <h2>Team 1:</h2>
+            <ul id="team1"></ul>
+            <p id="team1Strength">Total Strength: 0</p>
+        </div>
+        <div>
+            <h2>Team 2:</h2>
+            <ul id="team2"></ul>
+            <p id="team2Strength">Total Strength: 0</p>
+        </div>
+    </div>
     <script>
         const players = JSON.parse(localStorage.getItem('players')) || [];
 

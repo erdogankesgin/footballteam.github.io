@@ -18,12 +18,59 @@ h1 {
     color: #0056b3;
 }
 
-form {
+.main-container {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    align-items: center;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 40px;
+}
+
+.top{
+display: flex;
+justify-content: space-around;
+padding: 40px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.teams {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
+}
+
+form {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 30%;
     max-width: 600px;
-    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
+}
+
+.player-list {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    width: 30%;
+    max-width: 600px;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -62,7 +109,8 @@ form button:hover {
 .container {
     display: flex;
     justify-content: space-between;
-    margin-top: 40px;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .team {
@@ -145,4 +193,3 @@ p {
     margin-top: 10px;
     font-size: 16px;
 }
-
