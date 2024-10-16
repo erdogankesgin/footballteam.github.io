@@ -64,19 +64,6 @@
             });
 
             document.querySelectorAll('.player-item').forEach(item => {
-                item.addEventListener('dblclick', function() {
-                    const playerName = this.querySelector('.player-name');
-                    const newName = prompt("Yeni oyuncu adını girin:", playerName.textContent);
-                    if (newName) {
-                        playerName.textContent = newName;
-                        // Update player object in the players array
-                        const player = players.find(p => p.name === playerName.textContent);
-                        if (player) {
-                            player.name = newName;
-                        }
-                    }
-                });
-
                 const strengthSlider = item.querySelector('.strength-slider');
                 strengthSlider.addEventListener('input', function() {
                     const playerStrength = item.querySelector('.player-strength');

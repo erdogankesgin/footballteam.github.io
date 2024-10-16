@@ -303,6 +303,7 @@ button:hover {
     z-index: 10;
 }
 
+
 .player-item:hover .edit-controls {
     display: block;
 }
